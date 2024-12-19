@@ -324,6 +324,8 @@ def fetch_initial_state_data(
             )
         )
 
+        state["realm_default_description"] = realm.DEFAULT_REALM_DESCRIPTION
+
         # We pretend these features are disabled because anonymous
         # users can't access them.  In the future, we may want to move
         # this logic to the frontends, so that we can correctly

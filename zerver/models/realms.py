@@ -11,6 +11,7 @@ from django.db import models
 from django.db.models import CASCADE, Q, QuerySet, Sum
 from django.db.models.signals import post_delete, post_save, pre_delete
 from django.utils.timezone import now as timezone_now
+from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 from typing_extensions import override
 
@@ -162,11 +163,14 @@ class Realm(models.Model):  # type: ignore[django-manager-missing] # django-stub
     SUBDOMAIN_FOR_ROOT_DOMAIN = ""
     WILDCARD_MENTION_THRESHOLD = 15
 
+    DEFAULT_REALM_DESCRIPTION = _("The coolest place in the universe.")
+
     id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")
 
     # User-visible display name and description used on e.g. the organization homepage
     name = models.CharField(max_length=MAX_REALM_NAME_LENGTH)
-    description = models.TextField(default="")
+    # description = models.TextField(default="")
+    description = models.TextField(default=DEFAULT_REALM_DESCRIPTION, blank=True, null=True)
 
     # A short, identifier-like name for the organization.  Used in subdomains;
     # e.g. on a server at example.com, an org with string_id `foo` is reached
