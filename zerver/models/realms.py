@@ -150,6 +150,7 @@ class Realm(models.Model):  # type: ignore[django-manager-missing] # django-stub
     MAX_REALM_SUBDOMAIN_LENGTH = 40
     MAX_REALM_REDIRECT_URL_LENGTH = 128
 
+    DEFAULT_REALM_DESCRIPTION = "The coolest place in the universe."
     INVITES_STANDARD_REALM_DAILY_MAX = 3000
     MESSAGE_VISIBILITY_LIMITED = 10000
     SUBDOMAIN_FOR_ROOT_DOMAIN = ""
