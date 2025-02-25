@@ -396,7 +396,7 @@ function is_from_mac_terminal(paste_html: string): boolean {
     }
 
     const has_mac_terminal_metadata = [...html_tag.querySelectorAll("meta")].some(
-        (meta) => (meta.name === "Generator" && meta.content?.includes("Cocoa HTML Writer")),
+        (meta) => meta.name === "Generator" && meta.content?.includes("Cocoa HTML Writer"),
     );
 
     if (!has_mac_terminal_metadata) {
