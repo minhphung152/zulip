@@ -385,6 +385,21 @@ export function is_white_space_pre(paste_html: string): boolean {
     );
 }
 
+function is_from_mac_terminal(paste_html: string): boolean {
+    const html_fragment = new DOMParser()
+        .parseFromString(paste_html, "text/html");
+
+    const has_mac_terminal_metadata = [...html_fragment.querySelectorAll("meta")].some(
+        (meta) => (meta.name === "Generator" && meta.content?.includes("Cocoa HTML Writer")),
+    );
+
+    if (!has_mac_terminal_metadata) {
+        return false;
+    }
+    
+    return true;
+}
+
 function is_from_excel(html_fragment: HTMLBodyElement): boolean {
     const html_tag = html_fragment.parentElement;
     if (!html_tag || html_tag.nodeName !== "HTML") {
@@ -924,7 +939,8 @@ export function paste_handler(this: HTMLTextAreaElement, event: JQuery.Triggered
         if (
             !compose_ui.cursor_inside_code_block($textarea) &&
             paste_html &&
-            !compose_ui.shift_pressed
+            !compose_ui.shift_pressed &&
+            !is_from_mac_terminal(paste_html)
         ) {
             if (is_single_image(paste_html)) {
                 // If the copied content is a single image, we let upload.ts handle it.
